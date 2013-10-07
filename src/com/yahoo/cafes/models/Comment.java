@@ -3,8 +3,6 @@ package com.yahoo.cafes.models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.R.menu;
-
 public class Comment {
 	
 	private int commentId;
