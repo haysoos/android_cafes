@@ -1,5 +1,6 @@
 package com.yahoo.cafes.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,8 +8,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Menu {
+public class Menu implements Serializable {
 	
+	private static final long serialVersionUID = 7606341235699903458L;
 	private int menuId;
 	private int locationId;
 	private String station;
@@ -137,5 +139,9 @@ public class Menu {
 		return "Menu [menuId=" + menuId + ", locationId=" + locationId
 				+ ", station=" + station + ", createdAt=" + createdAt
 				+ ", updatedAt=" + updatedAt +"]";
+	}
+
+	public List<MenuItem> getMenuItems() {
+		return menuItems;
 	}
 }

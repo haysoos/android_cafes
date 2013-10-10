@@ -1,5 +1,6 @@
 package com.yahoo.cafes.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,8 +10,9 @@ import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 
-public class MenuItem {
+public class MenuItem implements Serializable {
 	
+	private static final long serialVersionUID = -5246885874438766745L;
 	private int menuItemId;
 	private int menuId;
 	private String title;
