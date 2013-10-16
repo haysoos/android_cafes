@@ -5,10 +5,12 @@ import org.json.JSONException;
 
 import android.util.Log;
 import android.widget.ArrayAdapter;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.yahoo.cafes.models.Cafe;
+import com.yahoo.cafes.models.Location;
 
 public class UrlsClient extends AsyncHttpClient {
 
@@ -22,11 +24,13 @@ public class UrlsClient extends AsyncHttpClient {
 	private UrlsClient(){
 	}
 
-	public void loadCafeFromApi(final ArrayAdapter adapter) {
+	public void loadCafeFromApi(final ArrayAdapter<Location> adapter) {
 	
 		RequestParams params = new RequestParams();
 		params.put("date", "10-4");
-		this.get(urlBuilder("all_by_date.json"), params, new JsonHttpResponseHandler(){
+		//String url = urlBuilder("today.json");
+		String url = urlBuilder("all_by_date.json");
+		this.get(url, params, new JsonHttpResponseHandler(){
 			
 			@Override
 			public void onSuccess(JSONArray jsonArray){

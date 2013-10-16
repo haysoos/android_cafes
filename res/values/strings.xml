@@ -8,5 +8,6 @@
     <string name="title_activity_second">SecondActivity</string>
     <string name="title_activity_menu">MenuActivity</string>
     <string name="title_activity_menu_items">MenuItemsActivity</string>
+    <string name="title_activity_rating">RatingActivity</string>
 
 </resources>

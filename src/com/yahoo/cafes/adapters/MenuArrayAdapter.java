@@ -22,10 +22,12 @@ public class MenuArrayAdapter extends ArrayAdapter<Menu> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		LinearLayout v = (LinearLayout) vi.inflate(R.layout.listview_item, null);
+		LinearLayout v = (LinearLayout) vi.inflate(R.layout.menu_listview_item, null);
 		Menu menu = this.getItem(position);
-		TextView tvItemTitle = (TextView) v.findViewById(R.id.tvLocation);
-		tvItemTitle.setText(menu.getStation() + " " + menu.getCountOfMenuItems() + " items");
+		TextView tvMenuName = (TextView) v.findViewById(R.id.tvMenuName);
+		tvMenuName.setText(menu.getStation());
+		TextView tvItemCount = (TextView) v.findViewById(R.id.tvItemNumber);
+		tvItemCount.setText(menu.getCountOfMenuItems() + " items");
 		return v;
 	}
 

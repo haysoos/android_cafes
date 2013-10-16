@@ -28,6 +28,19 @@ public class MenuActivity extends Activity {
 		if (bundle != null){
 			location = (Location) bundle.get("location");
 			Log.d("DEBUG", location.toString());
+			//Set background based on selected location
+			if(locationNameContains("url's")) {
+				setBackgroundImage(R.drawable.bldg_urls_clear_tall);
+			} else if (locationNameContains("bldg e")) {
+				setBackgroundImage(R.drawable.bldg_e_clear_tall);
+			} else if (locationNameContains("bldg f")) {
+				setBackgroundImage(R.drawable.bldg_f_clear_tall);
+			} else if (locationNameContains("bldg g")){
+				setBackgroundImage(R.drawable.bldg_g_clear_tall);
+			} else {
+				setBackgroundImage(R.drawable.peppers_clear);
+			}
+			
 			
 			ArrayAdapter<com.yahoo.cafes.models.Menu> menuAdapter = 
 					new MenuArrayAdapter(this.getApplicationContext(), location.getMenus());
@@ -49,6 +62,14 @@ public class MenuActivity extends Activity {
 		} else {
 			Log.d("DEBUG", "Extras bundle is null");
 		}
+	}
+
+	private void setBackgroundImage(int resourceId) {
+		getWindow().getDecorView().setBackgroundResource(resourceId);
+	}
+
+	private boolean locationNameContains(String substring) {
+		return location.getName().toLowerCase().contains(substring);
 	}
 
 	@Override

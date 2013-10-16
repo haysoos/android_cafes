@@ -33,6 +33,10 @@
             android:name="com.yahoo.cafes.MenuItemsActivity"
             android:label="@string/title_activity_menu_items" >
         </activity>
+        <activity
+            android:name="com.yahoo.cafes.RatingActivity"
+            android:label="@string/title_activity_rating" >
+        </activity>
     </application>
 
 </manifest>

@@ -3,6 +3,7 @@ package com.yahoo.cafes.adapters;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +25,11 @@ public class LocationArrayAdapter extends ArrayAdapter<Location>{
 		LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		LinearLayout v = (LinearLayout) vi.inflate(R.layout.listview_item, null);
 		Location location = this.getItem(position);
-		TextView tvItemTitle = (TextView) v.findViewById(R.id.tvLocation);
+		TextView tvItemTitle = (TextView) v.findViewById(R.id.tvItem);
 		//TextView tvItemDesc = (TextView) v.findViewById(R.id.tvItemDescription);
 		tvItemTitle.setText(location.getName() + " " + location.getMealtime());
 		//tvItemDesc.setText(location.getDescription());
+		tvItemTitle.setTextColor(Color.WHITE);
 		return v;
 	}
 }

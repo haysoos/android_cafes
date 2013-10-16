@@ -40,9 +40,9 @@ public class MenuItemsActivity extends Activity {
 						int position, long id) {
 					
 					MenuItem menuItem = (MenuItem) lvMenus.getItemAtPosition(position);
-					//Intent intent = new Intent(MenuActivity.this.getApplicationContext(), MenuItemsActivity.class);
-					//intent.putExtra("menuItem", menuItem);
-					//startActivity(intent);
+					Intent intent = new Intent(MenuItemsActivity.this.getApplicationContext(), RatingActivity.class);
+					intent.putExtra("menuItem", menuItem);
+					startActivity(intent);
 				}
 			});
 		}
