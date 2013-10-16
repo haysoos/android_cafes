@@ -23,10 +23,13 @@ public class MenuActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_menu);
 		
+		
+		
 		final ListView lvMenus = (ListView) this.findViewById(R.id.lvMenu);
 		Bundle bundle = getIntent().getExtras();
 		if (bundle != null){
 			location = (Location) bundle.get("location");
+			setTitle(location.getName());
 			Log.d("DEBUG", location.toString());
 			//Set background based on selected location
 			if(locationNameContains("url's")) {

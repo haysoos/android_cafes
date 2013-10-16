@@ -27,7 +27,7 @@ public class UrlsClient extends AsyncHttpClient {
 	public void loadCafeFromApi(final ArrayAdapter<Location> adapter) {
 	
 		RequestParams params = new RequestParams();
-		params.put("date", "10-4");
+		params.put("date", "9-10");
 		//String url = urlBuilder("today.json");
 		String url = urlBuilder("all_by_date.json");
 		this.get(url, params, new JsonHttpResponseHandler(){

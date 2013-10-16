@@ -55,11 +55,11 @@ public class MenuItem implements Serializable {
 	}
 
 	public String getRatingImageName() {
-		return "round-rating" + getStringFormattedRating().replace(".", "") + "-150.png";
+		return "round_rating" + getStringFormattedRating().replace(".", "") + "_150";
 	}
 
 	public String getRatingImageNameInWhite() {
-		return "round-rating" + getStringFormattedRating().replace(".", "") + "-150-white.png";
+		return "round_rating" + getStringFormattedRating().replace(".", "") + "_150_white";
 	}
 	
 	@SuppressLint("DefaultLocale")

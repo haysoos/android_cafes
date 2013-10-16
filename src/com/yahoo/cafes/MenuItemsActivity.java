@@ -27,6 +27,7 @@ public class MenuItemsActivity extends Activity {
 		Bundle bundle = getIntent().getExtras();
 		if (bundle != null){
 			menu = (com.yahoo.cafes.models.Menu) bundle.get("menu");
+			setTitle(menu.getStation());
 			Log.d("DEBUG", menu.toString());
 			
 			ArrayAdapter<MenuItem> menuAdapter = 

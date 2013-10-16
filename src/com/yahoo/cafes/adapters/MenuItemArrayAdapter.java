@@ -1,9 +1,12 @@
 package com.yahoo.cafes.adapters;
 
+import java.io.File;
 import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,9 +34,17 @@ public class MenuItemArrayAdapter extends ArrayAdapter<MenuItem> {
 		tvMenuItemName.setTextColor(Color.BLACK);
 		
 		ImageView ivRating = (ImageView) v.findViewById(R.id.ivRating);
-		ivRating.setImageResource(R.drawable.round_rating15_150);
+		Log.d("DEBUG",  menuItem.getRatingImageName() + " " + getImageResourceId(parent, menuItem));
+		ivRating.setImageResource(getImageResourceId(parent, menuItem));
 		
 		return v;
+	}
+
+	private int getImageResourceId(View view, MenuItem menuItem) {
+		return view.getContext().getResources().getIdentifier(
+				menuItem.getRatingImageName(), 
+				"drawable", 
+				view.getContext().getPackageName());
 	}
 
 }

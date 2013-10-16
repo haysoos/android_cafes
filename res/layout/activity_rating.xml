@@ -8,4 +8,30 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".RatingActivity" >
 
+    <ImageView
+        android:id="@+id/ivRatingImage"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/round_rating05_150" />
+
+    <ListView
+        android:id="@+id/lvComments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/ivRatingImage" >
+    </ListView>
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ivRatingImage"
+        android:layout_alignRight="@+id/lvComments"
+        android:layout_alignTop="@+id/ivRatingImage"
+        android:layout_toRightOf="@+id/ivRatingImage"
+        android:text="TextView" />
+
 </RelativeLayout>
