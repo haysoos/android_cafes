@@ -31,7 +31,7 @@ public class MenuItemsActivity extends Activity {
 			Log.d("DEBUG", menu.toString());
 			
 			ArrayAdapter<MenuItem> menuAdapter = 
-					new MenuItemArrayAdapter(this.getApplicationContext(), menu.getMenuItems());
+					new MenuItemArrayAdapter(getApplicationContext(), menu.getMenuItems());
 			lvMenus.setAdapter(menuAdapter);
 			
 			lvMenus.setOnItemClickListener(new OnItemClickListener() {

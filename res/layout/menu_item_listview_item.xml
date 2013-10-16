@@ -13,7 +13,7 @@
         android:src="@drawable/round_rating0_150" />
 
     <TextView
-        android:id="@+id/tvMenuItemName"
+        android:id="@+id/tvMenuItemTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

@@ -29,7 +29,7 @@ public class MenuItemArrayAdapter extends ArrayAdapter<MenuItem> {
 		LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		RelativeLayout v = (RelativeLayout) vi.inflate(R.layout.menu_item_listview_item, null);
 		MenuItem menuItem = this.getItem(position);
-		TextView tvMenuItemName = (TextView) v.findViewById(R.id.tvMenuItemName);
+		TextView tvMenuItemName = (TextView) v.findViewById(R.id.tvMenuItemTitle);
 		tvMenuItemName.setText(menuItem.getTitle());
 		tvMenuItemName.setTextColor(Color.BLACK);
 		
