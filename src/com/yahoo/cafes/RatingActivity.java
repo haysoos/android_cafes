@@ -1,14 +1,20 @@
 package com.yahoo.cafes;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.yahoo.cafes.adapters.CommentsArrayAdapter;
+import com.yahoo.cafes.api.UrlsClient;
+import com.yahoo.cafes.models.Comment;
 import com.yahoo.cafes.models.MenuItem;
 
 public class RatingActivity extends Activity {
@@ -19,6 +25,8 @@ public class RatingActivity extends Activity {
 	private ImageView ivRating;
 	private TextView tvReviewers;
 	private TextView tvRatingText;
+	private ArrayAdapter<Comment> adapter;
+	private ListView lvComments;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +38,11 @@ public class RatingActivity extends Activity {
 		if (bundle != null) {
 			menuItem = (MenuItem) bundle.get("menuItem");
 			setTitle(menuItem.getTitle());
+			
+			adapter = new CommentsArrayAdapter(getApplicationContext(), menuItem.getComments());
+			loadComments(adapter);
+			lvComments = (ListView) findViewById(R.id.lvComments);
+			lvComments.setAdapter(adapter);
 			
 			tvMenuItemName = (TextView) findViewById(R.id.tvMenuItemName);
 			tvMenuItemName.setText(menuItem.getTitle());
@@ -65,8 +78,16 @@ public class RatingActivity extends Activity {
 		}
 	}
 
+	private void loadComments(ArrayAdapter<Comment> adapter) {
+		UrlsClient.getInstance().loadCommentsForMenuItem(menuItem, adapter);
+	}
+
 	private void clickedOnRatingImage() {
 		Toast.makeText(getApplicationContext(), "Clicked on Rating Image", Toast.LENGTH_SHORT).show();
+		Intent intent = new Intent(getBaseContext(), UserRatingActivity.class);
+		intent.putExtra("menuItem", menuItem);
+		
+		startActivity(intent);
 	}
 	
 	@Override

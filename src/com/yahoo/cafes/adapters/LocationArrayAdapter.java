@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.yahoo.cafes.R;
 import com.yahoo.cafes.models.Location;
 
-public class LocationArrayAdapter extends ArrayAdapter<Location>{
+public class LocationArrayAdapter extends ArrayAdapter<Location> {
 
 	public LocationArrayAdapter(Context context, List<Location> locations) {
 		super(context, R.layout.activity_main, locations);

@@ -313,4 +313,8 @@ public class MenuItem implements Serializable {
 				+ updatedAt + ", myComment=" + myComment + "]";
 	}
 
+	public List<Comment> getComments() {
+		return comments;
+	}
+
 }

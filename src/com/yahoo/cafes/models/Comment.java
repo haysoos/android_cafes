@@ -1,10 +1,13 @@
 package com.yahoo.cafes.models;
 
+import java.io.Serializable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Comment {
-	
+public class Comment implements Serializable {
+
+	private static final long serialVersionUID = 3754671063263598893L;
 	private int commentId;
 	private int userId;
 	private int menuItemId;
@@ -23,7 +26,10 @@ public class Comment {
 		createdAt = json.getString("created_at");
 		updatedAt = json.getString("updated_at");
 		username = json.getString("username");
-		userRating = json.getInt("user_rating");
+		
+		if (!json.isNull("user_rating")) {
+			userRating = json.getInt("user_rating");
+		}
 		
 	}
 	

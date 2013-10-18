@@ -10,7 +10,9 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.yahoo.cafes.models.Cafe;
+import com.yahoo.cafes.models.Comment;
 import com.yahoo.cafes.models.Location;
+import com.yahoo.cafes.models.MenuItem;
 
 public class UrlsClient extends AsyncHttpClient {
 
@@ -53,6 +55,31 @@ public class UrlsClient extends AsyncHttpClient {
 
 	private String urlBuilder(String endpoint) {
 		return CAFES_BASE_URL + endpoint;
+	}
+
+	public void loadCommentsForMenuItem(final MenuItem menuItem, final ArrayAdapter<Comment> adapter) {
+		
+		String url = urlBuilder("menu_items/" + menuItem.getMenuItemId() + "/comments.json");
+		this.get(url, null, new JsonHttpResponseHandler(){
+			
+			@Override
+			public void onSuccess(JSONArray jsonArray){
+				try {
+					Log.d("DEBUG", jsonArray.toString());
+					menuItem.loadComments(jsonArray);
+					Log.d("DEBUG", menuItem.getComments().get(0).toString());
+					adapter.notifyDataSetChanged();
+				} catch (JSONException e) {
+					Log.d("DEBUG", e.getMessage());
+				}
+			}
+			
+			@Override
+			public void onFailure(Throwable e){
+				Log.d("DEBUG", e.getMessage());
+			}
+		});
+		
 	}
 
 }

@@ -3,11 +3,15 @@
 
     <string name="app_name">Cafes</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
     <string name="title_activity_first">FirstActivity</string>
     <string name="title_activity_second">SecondActivity</string>
     <string name="title_activity_menu">MenuActivity</string>
     <string name="title_activity_menu_items">MenuItemsActivity</string>
     <string name="title_activity_rating">RatingActivity</string>
-
+    <string name="title_activity_user_rating">UserRatingActivity</string>
+    <string name="favorite">Notify me when available</string>
+	<string name="btnUserRatingSubmit">Submit</string>
+	<string name="tvComments">Comments</string>
+	<string name="ivRatingContentDescription">Image of Rating for this Item</string>
+    
 </resources>

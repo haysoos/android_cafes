@@ -17,13 +17,14 @@ import com.yahoo.cafes.models.MenuItem;
 public class MenuItemsActivity extends Activity {
 
 	private com.yahoo.cafes.models.Menu menu;
+	private ListView lvMenus;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_menu_items);
 		
-		final ListView lvMenus = (ListView) this.findViewById(R.id.lvMenuItems);
+		lvMenus = (ListView) this.findViewById(R.id.lvMenuItems);
 		Bundle bundle = getIntent().getExtras();
 		if (bundle != null){
 			menu = (com.yahoo.cafes.models.Menu) bundle.get("menu");
@@ -39,16 +40,17 @@ public class MenuItemsActivity extends Activity {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					
-					MenuItem menuItem = (MenuItem) lvMenus.getItemAtPosition(position);
-					Intent intent = new Intent(MenuItemsActivity.this.getApplicationContext(), RatingActivity.class);
-					intent.putExtra("menuItem", menuItem);
-					startActivity(intent);
+					clickedOnMenuItem(position);
 				}
 			});
 		}
-		
-		
+	}
+	
+	private void clickedOnMenuItem(int position) {
+		MenuItem menuItem = (MenuItem) lvMenus.getItemAtPosition(position);
+		Intent intent = new Intent(getBaseContext(), RatingActivity.class);
+		intent.putExtra("menuItem", menuItem);
+		startActivity(intent);
 	}
 
 	@Override

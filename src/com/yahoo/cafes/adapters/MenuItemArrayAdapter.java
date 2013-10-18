@@ -1,11 +1,9 @@
 package com.yahoo.cafes.adapters;
 
-import java.io.File;
 import java.util.List;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;

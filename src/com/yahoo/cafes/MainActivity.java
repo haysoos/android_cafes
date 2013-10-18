@@ -17,14 +17,15 @@ import com.yahoo.cafes.models.Location;
 
 public class MainActivity extends Activity {
 
+	private ArrayAdapter<Location> adapter;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
 		ListView lvLocations = (ListView) findViewById(R.id.lvLocations);
-		final ArrayAdapter<Location> adapter = 
-				new LocationArrayAdapter(this.getApplicationContext(), Cafe.getInstance().getLocations());
+		adapter = new LocationArrayAdapter(getApplicationContext(), Cafe.getInstance().getLocations());
 		lvLocations.setAdapter(adapter);
 		UrlsClient.getInstance().loadCafeFromApi(adapter);
 		

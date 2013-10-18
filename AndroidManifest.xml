@@ -37,6 +37,10 @@
             android:name="com.yahoo.cafes.RatingActivity"
             android:label="@string/title_activity_rating" >
         </activity>
+        <activity
+            android:name="com.yahoo.cafes.UserRatingActivity"
+            android:label="@string/title_activity_user_rating" >
+        </activity>
     </application>
 
 </manifest>
