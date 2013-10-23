@@ -25,7 +25,8 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/rbUserRating"
         android:layout_marginTop="18dp"
-        android:ems="10" >
+        android:ems="10" 
+        android:inputType="textMultiLine" >
 
         <requestFocus />
     </EditText>
@@ -53,5 +54,16 @@
         android:layout_alignBottom="@+id/tbFavorite"
         android:layout_alignParentLeft="true"
         android:text="@string/favorite" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" >
+
+    </FrameLayout>
 
 </RelativeLayout>

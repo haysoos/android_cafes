@@ -1,7 +1,9 @@
 package com.yahoo.cafes;
 
-import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -12,10 +14,14 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.yahoo.cafes.api.UrlsClient;
+import com.yahoo.cafes.fragments.RegistrationFragment;
 import com.yahoo.cafes.models.Comment;
 import com.yahoo.cafes.models.MenuItem;
+import com.yahoo.cafes.models.User;
+import com.yahoo.cafes.models.exceptions.UserNotInitialzied;
 
-public class UserRatingActivity extends Activity {
+public class UserRatingActivity extends FragmentActivity {
 
 	private Button btnSubmitUserRating;
 	private MenuItem menuItem;
@@ -68,19 +74,35 @@ public class UserRatingActivity extends Activity {
 
 	private void clickedOnSubmitUserRatingButton() {
 		Toast.makeText(getBaseContext(), "Rating Submitted", Toast.LENGTH_SHORT).show();
+		
+		SharedPreferences preferences = getPreferences(MODE_ENABLE_WRITE_AHEAD_LOGGING);
+		try {
+			User.getInstance().loadFromPreferences(preferences);
+		} catch (UserNotInitialzied e) {
+			
+			FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+			RegistrationFragment fragment = new RegistrationFragment();
+			fragment.setPreferences(preferences);
+			ft.replace(R.id.frameLayout1, fragment);
+			ft.commit();
+
+			return;
+		}
+		
 		Comment comment = new Comment();
 		comment.setMenuItemId(menuItem.getMenuItemId());
 		comment.setText(etUserComment.getText().toString());
 		comment.setUserRating((int) rbUserRating.getRating());
-		//comment.setUserId(userId);
-		//comment.setUsername(username);
+		comment.setUserId(User.getInstance().getUserId());
+		comment.setUsername(User.getInstance().getUsername());
+		menuItem.setMyComment(comment);
 		
 		if (tbFavorite.isChecked()) {
 			//TODO: Save this to local data
 		}
 		
 		//TODO: POST data to server
-				
+		UrlsClient.getInstance().postComment(comment);
 		finish();
 	}
 

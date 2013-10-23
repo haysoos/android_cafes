@@ -2,9 +2,13 @@ package com.yahoo.cafes.api;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
+import android.content.SharedPreferences;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -13,6 +17,7 @@ import com.yahoo.cafes.models.Cafe;
 import com.yahoo.cafes.models.Comment;
 import com.yahoo.cafes.models.Location;
 import com.yahoo.cafes.models.MenuItem;
+import com.yahoo.cafes.models.User;
 
 public class UrlsClient extends AsyncHttpClient {
 
@@ -29,9 +34,9 @@ public class UrlsClient extends AsyncHttpClient {
 	public void loadCafeFromApi(final ArrayAdapter<Location> adapter) {
 	
 		RequestParams params = new RequestParams();
-		params.put("date", "9-10");
-		//String url = urlBuilder("today.json");
-		String url = urlBuilder("all_by_date.json");
+		//params.put("date", "9-10");
+		String url = urlBuilder("today.json");
+		//String url = urlBuilder("all_by_date.json");
 		this.get(url, params, new JsonHttpResponseHandler(){
 			
 			@Override
@@ -67,7 +72,6 @@ public class UrlsClient extends AsyncHttpClient {
 				try {
 					Log.d("DEBUG", jsonArray.toString());
 					menuItem.loadComments(jsonArray);
-					Log.d("DEBUG", menuItem.getComments().get(0).toString());
 					adapter.notifyDataSetChanged();
 				} catch (JSONException e) {
 					Log.d("DEBUG", e.getMessage());
@@ -80,6 +84,64 @@ public class UrlsClient extends AsyncHttpClient {
 			}
 		});
 		
+	}
+
+	public void createUserCredentials(final User user, final SharedPreferences preferences, final ProgressBar progressBar) {
+		
+		RequestParams params = new RequestParams();
+		params.put("username", user.getUsername());
+		String url = urlBuilder("users.json");
+		this.post(url, params, new JsonHttpResponseHandler(){
+			
+			@Override
+			public void onSuccess(JSONObject json){
+				try {
+					Log.d("DEBUG", json.toString());
+					user.loadFromJson(json);
+					user.saveToPreferences(preferences);
+					//adapter.notifyDataSetChanged();
+					progressBar.setVisibility(View.INVISIBLE);
+					
+				} catch (JSONException e) {
+					Log.d("DEBUG", e.getMessage());
+					progressBar.setVisibility(View.INVISIBLE);
+				}
+			}
+			
+			@Override
+			public void onFailure(Throwable e){
+				Log.d("DEBUG", e.getMessage());
+			}
+		});
+		
+	}
+
+	public void postComment(final Comment comment) {
+		RequestParams params = new RequestParams();
+		params.put("user_id", Integer.toString(comment.getUserId()));
+		params.put("rating", Integer.toString(comment.getUserRating()));
+		params.put("comment", comment.getText());
+		params.put("token", User.getInstance().getToken());
+		
+		String url = urlBuilder("menu_items/" + comment.getMenuItemId() + "/rate.json");
+		this.post(url, params, new JsonHttpResponseHandler(){
+			
+			@Override
+			public void onSuccess(JSONObject json){
+				try {
+					Log.d("DEBUG", json.toString());
+					comment.setCommentId(json.getInt("id"));
+					//adapter.notifyDataSetChanged();
+				} catch (JSONException e) {
+					Log.d("DEBUG", e.getMessage());
+				}
+			}
+			
+			@Override
+			public void onFailure(Throwable e){
+				Log.d("DEBUG", e.getMessage());
+			}
+		});
 	}
 
 }
