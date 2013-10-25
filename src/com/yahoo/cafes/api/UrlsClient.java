@@ -117,6 +117,9 @@ public class UrlsClient extends AsyncHttpClient {
 	}
 
 	public void postComment(final Comment comment) {
+		
+		comment.setUserId(User.getInstance().getUserId());
+		comment.setUsername(User.getInstance().getUsername());
 		RequestParams params = new RequestParams();
 		params.put("user_id", Integer.toString(comment.getUserId()));
 		params.put("rating", Integer.toString(comment.getUserRating()));

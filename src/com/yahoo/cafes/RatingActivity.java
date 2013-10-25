@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yahoo.cafes.adapters.CommentsArrayAdapter;
 import com.yahoo.cafes.api.UrlsClient;
@@ -48,7 +47,7 @@ public class RatingActivity extends Activity {
 			tvMenuItemName.setText(menuItem.getTitle());
 			
 			tvDescription = (TextView) findViewById(R.id.tvDescription);
-			if (menuItem.getDescription() != null) {
+			if (menuItem.getDescription() != null && !menuItem.getDescription().equals("null")) {
 				tvDescription.setText(menuItem.getDescription());
 			} else {
 				tvDescription.setText("no description provided");
@@ -83,7 +82,6 @@ public class RatingActivity extends Activity {
 	}
 
 	private void clickedOnRatingImage() {
-		Toast.makeText(getApplicationContext(), "Clicked on Rating Image", Toast.LENGTH_SHORT).show();
 		Intent intent = new Intent(getBaseContext(), UserRatingActivity.class);
 		intent.putExtra("menuItem", menuItem);
 		
