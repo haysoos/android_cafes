@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 
 import com.yahoo.cafes.fragments.UserRatingFragment;
+import com.yahoo.cafes.models.Cafe;
 import com.yahoo.cafes.models.MenuItem;
 
 public class UserRatingActivity extends FragmentActivity {
@@ -18,7 +19,10 @@ public class UserRatingActivity extends FragmentActivity {
 		Bundle bundle = getIntent().getExtras();
 		if (bundle != null) {
 			UserRatingFragment userRatingFragment = new UserRatingFragment();
-			userRatingFragment.setMenuItem((MenuItem) bundle.get("menuItem"));
+			
+			MenuItem menuItem = (MenuItem) bundle.get("menuItem");
+			menuItem = Cafe.getInstance().getMenuItemById(menuItem.getMenuItemId());
+			userRatingFragment.setMenuItem(menuItem);
 			loadUserRatingFragment(userRatingFragment);
 		} else {
 			Log.d("DEBUG", "Menu Item is null");

@@ -34,7 +34,7 @@
         android:layout_centerHorizontal="true"
         android:text="@string/btnUserRatingSubmit" />
 
-    <ToggleButton
+    <Switch
         android:id="@+id/tbFavorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

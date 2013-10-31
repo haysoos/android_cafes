@@ -13,5 +13,6 @@
 	<string name="btnUserRatingSubmit">Submit</string>
 	<string name="tvComments">Comments</string>
 	<string name="ivRatingContentDescription">Image of Rating for this Item</string>
+	<string name="favorites">favorites</string>
     
 </resources>

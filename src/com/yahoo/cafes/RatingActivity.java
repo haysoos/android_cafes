@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.yahoo.cafes.adapters.CommentsArrayAdapter;
 import com.yahoo.cafes.api.UrlsClient;
+import com.yahoo.cafes.models.Cafe;
 import com.yahoo.cafes.models.Comment;
 import com.yahoo.cafes.models.MenuItem;
 
@@ -36,6 +37,7 @@ public class RatingActivity extends Activity {
 		
 		if (bundle != null) {
 			menuItem = (MenuItem) bundle.get("menuItem");
+			menuItem = Cafe.getInstance().getMenuItemById(menuItem.getMenuItemId());
 			setTitle(menuItem.getTitle());
 			
 			adapter = new CommentsArrayAdapter(getApplicationContext(), menuItem.getComments());

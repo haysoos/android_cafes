@@ -1,8 +1,9 @@
 package com.yahoo.cafes.fragments;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -10,10 +11,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.Switch;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.yahoo.cafes.R;
 import com.yahoo.cafes.api.UrlsClient;
@@ -27,7 +30,7 @@ public class UserRatingFragment extends Fragment {
 	private Button btnSubmitUserRating;
 	private EditText etUserComment;
 	private RatingBar rbUserRating;
-	private ToggleButton tbFavorite;
+	private Switch tbFavorite;
 	private MenuItem menuItem;
 
 	@Override
@@ -63,17 +66,30 @@ public class UserRatingFragment extends Fragment {
 				clickedOnSubmitUserRatingButton();
 			}
 		});
+		
+		tbFavorite.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if (tbFavorite.isChecked()) {
+					SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+					User.getInstance().addMenuItemToFavorites(menuItem.getTitle(), preferences);
+				}
+			}
+		});
 	}
 
 	private void loadUIElements(View view) {
 		etUserComment = (EditText) view.findViewById(R.id.etUserComment);
 		rbUserRating = (RatingBar) view.findViewById(R.id.rbUserRating);
-		tbFavorite = (ToggleButton) view.findViewById(R.id.tbFavorite);
+		tbFavorite = (Switch) view.findViewById(R.id.tbFavorite);
 		btnSubmitUserRating = (Button) view.findViewById(R.id.btnSubmitRating);
 	}
 
+	@SuppressLint("InlinedApi")
 	private void clickedOnSubmitUserRatingButton() {
-		SharedPreferences preferences = getActivity().getPreferences(Context.MODE_ENABLE_WRITE_AHEAD_LOGGING);
+		
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
 		
 		Comment comment = new Comment();
 		comment.setMenuItemId(menuItem.getMenuItemId());
@@ -81,9 +97,7 @@ public class UserRatingFragment extends Fragment {
 		comment.setUserRating((int) rbUserRating.getRating());
 		menuItem.setMyComment(comment);
 
-		if (tbFavorite.isChecked()) {
-			//TODO: Save this to local data
-		}
+		
 		
 		try {
 			User.getInstance().loadFromPreferences(preferences);

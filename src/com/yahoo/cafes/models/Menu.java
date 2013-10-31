@@ -1,5 +1,6 @@
 package com.yahoo.cafes.models;
 
+import com.yahoo.cafes.R;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

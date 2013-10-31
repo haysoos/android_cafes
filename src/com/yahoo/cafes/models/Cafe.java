@@ -1,5 +1,6 @@
 package com.yahoo.cafes.models;
 
+import com.yahoo.cafes.R;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +43,48 @@ public class Cafe {
 
 	public List<Location> getLocations() {
 		return locations;
+	}
+
+	public MenuItem getMenuItemById(int menuItemId) {
+		for (Location location : locations) {
+			for (Menu menu : location.getMenus()) {
+				for (MenuItem menuItem : menu.getMenuItems()) {
+					if (menuItem.getMenuItemId() == menuItemId) {
+						return menuItem;
+					}
+				}
+			}
+		}
+		
+		return null;
+	}
+
+	public boolean containsMenuItem(String favorite) {
+		//TODO: Add fuzzy logic here to better match favorites
+
+		for (Location location : locations) {
+			for (Menu menu : location.getMenus()) {
+				for (MenuItem menuItem : menu.getMenuItems()) {
+					if (menuItem.getTitle().equals(favorite)) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	public Location getLocationForMenuItem(String menuItemTitle) {
+		for (Location location : locations) {
+			for (Menu menu : location.getMenus()) {
+				for (MenuItem menuItem : menu.getMenuItems()) {
+					if (menuItem.getTitle().equals(menuItemTitle)) {
+						return location;
+					}
+				}
+			}
+		}
+		return null;
 	}
 	
 	

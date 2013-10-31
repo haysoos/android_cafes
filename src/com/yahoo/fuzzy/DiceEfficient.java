@@ -1,5 +1,6 @@
 package com.yahoo.fuzzy;
 
+import com.yahoo.cafes.R;
 import java.util.ArrayList;
 import java.util.List;
 
