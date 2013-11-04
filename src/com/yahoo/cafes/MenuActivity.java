@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.yahoo.cafes.adapters.MenuArrayAdapter;
+import com.yahoo.cafes.models.Cafe;
 import com.yahoo.cafes.models.Location;
 
 public class MenuActivity extends Activity {
@@ -22,13 +23,20 @@ public class MenuActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_menu);
-		
-		
-		
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		initializeView();
+	}
+
+	private void initializeView() {
 		final ListView lvMenus = (ListView) this.findViewById(R.id.lvMenu);
 		Bundle bundle = getIntent().getExtras();
 		if (bundle != null){
-			location = (Location) bundle.get("location");
+			int locationId = bundle.getInt("location");
+			location = Cafe.getInstance().getLocationWithId(locationId);
 			setTitle(location.getName());
 			Log.d("DEBUG", location.toString());
 			//Set background based on selected location

@@ -1,5 +1,7 @@
 package com.yahoo.cafes.fragments;
 
+import java.util.Set;
+
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -42,20 +44,30 @@ public class UserRatingFragment extends Fragment {
 
 		loadUIElements(view);
 		customizeViewWithMyComment();
+		checkUserPreferncesForFavorites();
 		setActionListeners();
 
 		return view;
 	}
 
+	private void checkUserPreferncesForFavorites() {
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+
+		if (preferences.contains("favorites")) {
+			Set<String> favorites = preferences.getStringSet("favorites", null);
+			tbFavorite.setChecked(favorites.contains(menuItem.getTitle().toLowerCase()));
+		}
+	}
+
 	private void customizeViewWithMyComment() {
-		
+
 		if (menuItem.getMyComment() != null) {
 			etUserComment.setText(menuItem.getMyComment().getText());
 
 			if (menuItem.getMyComment().getUserRating() > 0) {
 				rbUserRating.setRating((float) menuItem.getMyComment().getUserId());
 			}
-		}			 
+		}
 	}
 
 	private void setActionListeners() {
@@ -66,14 +78,16 @@ public class UserRatingFragment extends Fragment {
 				clickedOnSubmitUserRatingButton();
 			}
 		});
-		
+
 		tbFavorite.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
+
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
 				if (tbFavorite.isChecked()) {
-					SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-					User.getInstance().addMenuItemToFavorites(menuItem.getTitle(), preferences);
+					User.getInstance().addMenuItemToFavorites(menuItem.getTitle().toLowerCase(), preferences);
+				} else {
+					User.getInstance().removeMenuItemFromFavorites(menuItem.getTitle().toLowerCase(), preferences);
 				}
 			}
 		});
@@ -88,29 +102,29 @@ public class UserRatingFragment extends Fragment {
 
 	@SuppressLint("InlinedApi")
 	private void clickedOnSubmitUserRatingButton() {
-		
+
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-		
+
 		Comment comment = new Comment();
 		comment.setMenuItemId(menuItem.getMenuItemId());
 		comment.setText(etUserComment.getText().toString());
 		comment.setUserRating((int) rbUserRating.getRating());
 		menuItem.setMyComment(comment);
 
-		
-		
+
+
 		try {
 			User.getInstance().loadFromPreferences(preferences);
 		} catch (UserNotInitialzied e) {
 			loadRegistrationFragment(preferences, comment);
 			return;
 		}
-		
+
 		UrlsClient.getInstance().postComment(comment);
 		Toast.makeText(getActivity().getBaseContext(), "Rating Submitted", Toast.LENGTH_SHORT).show();
 		getActivity().finish();
 	}
-	
+
 	private void loadRegistrationFragment(SharedPreferences preferences, Comment comment) {
 		FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
 		RegistrationFragment fragment = new RegistrationFragment();

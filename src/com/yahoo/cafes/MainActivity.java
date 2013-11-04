@@ -36,6 +36,10 @@ public class MainActivity extends Activity {
 		adapter = new LocationArrayAdapter(getApplicationContext(), Cafe.getInstance().getLocations());
 		lvLocations.setAdapter(adapter);
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		// use this to start and trigger a service
+		Intent i= new Intent(MainActivity.this.getApplicationContext(), FavoriteFoodsService.class);
+		// potentially add data to the intent
+		startService(i); 
 		
 		try {
 			User.getInstance().loadFromPreferences(preferences);
@@ -51,8 +55,9 @@ public class MainActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Location location = (Location) parent.getItemAtPosition(position);
 				
+//				Intent intent = new Intent(MainActivity.this.getApplicationContext(), MenuWithItemsActivity.class);
 				Intent intent = new Intent(MainActivity.this.getApplicationContext(), MenuActivity.class);
-				intent.putExtra("location", location);
+				intent.putExtra("location", location.getLocationId());
 				startActivity(intent);
 			}
 		});

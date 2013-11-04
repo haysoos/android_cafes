@@ -1,6 +1,5 @@
 package com.yahoo.cafes.models;
 
-import com.yahoo.cafes.R;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +10,8 @@ import org.json.JSONObject;
 public class Cafe {
 
 	private static Cafe instance = new Cafe();
-	private static List<Location> locations;
+	private static Cafe backgroundInstance = new Cafe();
+	private List<Location> locations;
 
 	private Cafe(){
 		locations = new ArrayList<Location>();
@@ -65,7 +65,7 @@ public class Cafe {
 		for (Location location : locations) {
 			for (Menu menu : location.getMenus()) {
 				for (MenuItem menuItem : menu.getMenuItems()) {
-					if (menuItem.getTitle().equals(favorite)) {
+					if (menuItem.getTitle().toLowerCase().equals(favorite)) {
 						return true;
 					}
 				}
@@ -78,7 +78,7 @@ public class Cafe {
 		for (Location location : locations) {
 			for (Menu menu : location.getMenus()) {
 				for (MenuItem menuItem : menu.getMenuItems()) {
-					if (menuItem.getTitle().equals(menuItemTitle)) {
+					if (menuItem.getTitle().equalsIgnoreCase(menuItemTitle)) {
 						return location;
 					}
 				}
@@ -86,7 +86,20 @@ public class Cafe {
 		}
 		return null;
 	}
-	
-	
+
+	public static Cafe getBackgroundInstance() {
+		return backgroundInstance;
+	}
+
+	public Location getLocationWithId(int locationId) {
+		
+		for (Location location : locations) {
+			if (location.getLocationId() == locationId) {
+				return location;
+			}
+		}
+		
+		return null;
+	}
 
 }

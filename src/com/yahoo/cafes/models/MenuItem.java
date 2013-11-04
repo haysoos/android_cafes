@@ -9,7 +9,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
-import com.yahoo.cafes.R;
 
 public class MenuItem implements Serializable {
 	
@@ -79,6 +78,7 @@ public class MenuItem implements Serializable {
 	}
 
 	public void loadComments(JSONArray json) throws JSONException {
+		comments.clear();
 		for(int i=0; i<json.length(); i++){
 			Comment comment = new Comment(json.getJSONObject(i));
 			if (comment.getUserId() == User.getInstance().getUserId()) {

@@ -32,45 +32,45 @@ public class RatingActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_rating);
-		
+
 		Bundle bundle = getIntent().getExtras();
-		
+
 		if (bundle != null) {
 			menuItem = (MenuItem) bundle.get("menuItem");
 			menuItem = Cafe.getInstance().getMenuItemById(menuItem.getMenuItemId());
 			setTitle(menuItem.getTitle());
-			
+
 			adapter = new CommentsArrayAdapter(getApplicationContext(), menuItem.getComments());
 			loadComments(adapter);
 			lvComments = (ListView) findViewById(R.id.lvComments);
 			lvComments.setAdapter(adapter);
-			
+
 			tvMenuItemName = (TextView) findViewById(R.id.tvMenuItemName);
 			tvMenuItemName.setText(menuItem.getTitle());
-			
+
 			tvDescription = (TextView) findViewById(R.id.tvDescription);
 			if (menuItem.getDescription() != null && !menuItem.getDescription().equals("null")) {
 				tvDescription.setText(menuItem.getDescription());
 			} else {
 				tvDescription.setText("no description provided");
 			}
-			
+
 			tvReviewers = (TextView) findViewById(R.id.tvReviewers);
 			if (menuItem.getNumberOfReviewers() == 1){
 				tvReviewers.setText(menuItem.getNumberOfReviewers() + " reviewer");
 			} else {
 				tvReviewers.setText(menuItem.getNumberOfReviewers() + " reviewers");
 			}
-			
+
 			tvRatingText = (TextView) findViewById(R.id.tvRatingText);
 			tvRatingText.setText(menuItem.getStringFormattedRating() + "/5");
-			
-			
+
+
 			ivRating = (ImageView) findViewById(R.id.ivRatingImage);
 			ivRating.setImageResource(this.getApplicationContext().getResources().getIdentifier(menuItem.getRatingImageName(), "drawable", this.getApplicationContext().getPackageName()));
-			
+
 			ivRating.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					clickedOnRatingImage();
@@ -86,10 +86,10 @@ public class RatingActivity extends Activity {
 	private void clickedOnRatingImage() {
 		Intent intent = new Intent(getBaseContext(), UserRatingActivity.class);
 		intent.putExtra("menuItem", menuItem);
-		
+
 		startActivity(intent);
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

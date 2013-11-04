@@ -1,5 +1,6 @@
 package com.yahoo.cafes.models;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -68,10 +69,18 @@ public class User {
 			userId = preferences.getInt(USER_ID, DEFAULT_USER_ID);
 			username = preferences.getString(USERNAME, EMPTY_STRING);
 			token = preferences.getString(TOKEN, EMPTY_STRING);
-			favorites = preferences.getStringSet(FAVORITES, new HashSet<String>());
+			//Have to store favorites in a temp set in order to work 
+			//around a bug that doesn't save more than 1 element of the set to preferences
+			cloneFavorites(preferences);
 		} else {
 			throw new UserNotInitialzied();
 		}
+	}
+
+	public void cloneFavorites(SharedPreferences preferences) {
+		favorites = new HashSet<String>();
+		Set<String> tempFavorites = preferences.getStringSet(FAVORITES, new HashSet<String>());
+		Collections.addAll(favorites, tempFavorites.toArray(new String[tempFavorites.size()]));
 	}
 
 	public void setUsername(String username) {
@@ -80,10 +89,8 @@ public class User {
 
 	public void addMenuItemToFavorites(String menuTitle, SharedPreferences preferences) {
 		favorites.add(menuTitle);
-		Editor editor = preferences.edit();
-		editor.putStringSet(FAVORITES, favorites);
-		editor.commit();
-		Log.d("STUFF", "Supposedly added set to favorites" + preferences.getStringSet(FAVORITES, null));
+		preferences.edit().putStringSet(FAVORITES, favorites).commit();
+		Log.d("DEBUG", "Supposedly added set to favorites" + preferences.getStringSet(FAVORITES, null));
 	}
 
 	public boolean isLoaded() {
@@ -92,6 +99,11 @@ public class User {
 
 	public Set<String> getFavorites() {
 		return favorites;
+	}
+
+	public void removeMenuItemFromFavorites(String menuTitle, SharedPreferences preferences) {
+		favorites.remove(menuTitle);
+		preferences.edit().putStringSet(FAVORITES, favorites).commit();
 	}
 
 }
